@@ -61,11 +61,6 @@ public class Job {
     }
 
 
-    /**
-     * 计算任务开始时间
-     * Shadow Source为前导任务的结束时间与前置任务的结束时间
-     * @return
-     */
     @ShadowSources({"previousJob.endTime", "predecessorJobs[].endTime"})
     public LocalDateTime startTimeSupplier() {
         LocalDateTime startTime = null;
@@ -91,10 +86,6 @@ public class Job {
         return startTime;
     }
 
-    /**
-     * 计算当前任务的结束时间
-     * @return
-     */
     @ShadowSources("startTime")
     public LocalDateTime endTimeSupplier() {
         if(this.startTime == null) {
