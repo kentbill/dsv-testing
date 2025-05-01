@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+
+  <appender name="consoleAppender"
+            class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%-12.12t] %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="fileAppender"
+            class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>log/timefold.log</file>
+    <rollingPolicy
+            class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>log/timefold.%i.log.zip</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>3</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>5MB</maxFileSize>
+    </triggeringPolicy>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%t] %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- To override the debug log level from the command line, use the VM option
+      "-Dlogback.level.org.timefold=trace" -->
+  <logger name="ai.timefold"
+          level="${logback.level.ai.timefold:-trace}" />
+
+  <root level="trace">
+    <appender-ref ref="consoleAppender" />
+    <!--<appender-ref ref="fileAppender" />-->
+  </root>
+
+</configuration>

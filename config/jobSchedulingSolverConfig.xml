@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver xmlns="https://timefold.ai/xsd/solver" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://timefold.ai/xsd/solver https://timefold.ai/xsd/solver/solver.xsd">
+
+
+   <!-- <enablePreviewFeature>DIVERSIFIED_LATE_ACCEPTANCE</enablePreviewFeature>-->
+    <enablePreviewFeature>DECLARATIVE_SHADOW_VARIABLES</enablePreviewFeature>
+<!--    <enablePreviewFeature>PLANNING_SOLUTION_DIFF</enablePreviewFeature>-->
+
+
+  <!-- To slowly prove there are no bugs in this code -->
+  <environmentMode>TRACKED_FULL_ASSERT</environmentMode>
+  <!-- To solve faster by saturating multiple CPU cores -->
+  <!--<moveThreadCount>AUTO</moveThreadCount>-->
+
+  <solutionClass>com.easyplan.domain.JobScheduling</solutionClass>
+  <entityClass>com.easyplan.domain.Job</entityClass>
+  <entityClass>com.easyplan.domain.ProductionLine</entityClass>
+
+  <scoreDirectorFactory>
+    <constraintProviderClass>com.easyplan.constraint.JobShopConstraintProvider</constraintProviderClass>
+  </scoreDirectorFactory>
+
+  <termination>
+    <terminationCompositionStyle>OR</terminationCompositionStyle>
+    <secondsSpentLimit>3</secondsSpentLimit>
+    <unimprovedSecondsSpentLimit>3</unimprovedSecondsSpentLimit>
+  </termination>
+
+  <constructionHeuristic>
+
+  </constructionHeuristic>
+  <localSearch>
+
+  </localSearch>
+</solver>
