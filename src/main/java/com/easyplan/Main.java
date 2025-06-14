@@ -52,6 +52,11 @@ public class Main {
         job03.getPredecessorJobs().add(job01);
         job03.getPredecessorJobs().add(job02);
 
+        // job's available production lines
+        job01.setAvailableProductionLines(new ArrayList<>(Collections.singletonList(productionLineList.get(0))));
+        job02.setAvailableProductionLines(new ArrayList<>(Collections.singletonList(productionLineList.get(1))));
+        job03.setAvailableProductionLines(new ArrayList<>(Collections.singletonList(productionLineList.get(2))));
+
         JobScheduling jobSchedulingProblem = new JobScheduling(1L,  jobList, productionLineList);
 
         String configFileName = System.getProperty("user.dir") + File.separator + "config" + File.separator + "jobSchedulingSolverConfig.xml";
@@ -67,11 +72,11 @@ public class Main {
         for (ProductionLine productionLine : solvedJobScheduling.getProductionLineList()) {
             if(productionLine.getJobList().isEmpty()) continue;
 
-            String jobInLine = productionLine.toString() + ":";
+            String jobInLine = productionLine + ":";
 
 
             for(Job job : productionLine.getJobList()) {
-                jobInLine += job.toString() + ",";
+                jobInLine += String.format("%s:[%s-%s],",job.toString(),  job.getStartTime(), job.getEndTime() );
             }
 
             logger.info(jobInLine);

@@ -11,7 +11,7 @@
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <timefold-solver.version>1.22.0</timefold-solver.version>
+        <timefold-solver.version>1.23.0</timefold-solver.version>
     </properties>
 
 

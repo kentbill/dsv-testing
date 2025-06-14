@@ -5,6 +5,7 @@ import ai.timefold.solver.core.api.domain.solution.PlanningScore;
 import ai.timefold.solver.core.api.domain.solution.PlanningSolution;
 import ai.timefold.solver.core.api.domain.solution.ProblemFactCollectionProperty;
 import ai.timefold.solver.core.api.domain.valuerange.ValueRangeProvider;
+import ai.timefold.solver.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class JobScheduling {
     protected List<ProductionLine> productionLineList;
 
     @PlanningScore
-    protected HardMediumSoftLongScore score;
+    protected HardMediumSoftBigDecimalScore score;
 
     public JobScheduling() {
     }
@@ -59,11 +60,11 @@ public class JobScheduling {
         this.productionLineList = productionLineList;
     }
 
-    public HardMediumSoftLongScore getScore() {
+    public HardMediumSoftBigDecimalScore getScore() {
         return score;
     }
 
-    public void setScore(HardMediumSoftLongScore score) {
+    public void setScore(HardMediumSoftBigDecimalScore score) {
         this.score = score;
     }
 
