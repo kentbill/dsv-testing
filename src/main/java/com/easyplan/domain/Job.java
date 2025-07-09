@@ -7,7 +7,8 @@ import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.variable.*;
 import ai.timefold.solver.core.preview.api.domain.variable.declarative.ShadowSources;
 import ai.timefold.solver.core.preview.api.domain.variable.declarative.ShadowVariableLooped;
-
+import jdk.jfr.DataAmount;
+import lombok.Data;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -65,18 +66,25 @@ public class Job {
     public LocalDateTime startTimeSupplier() {
         LocalDateTime startTime = null;
 
-        if(this.previousJob != null) {
-            startTime = this.previousJob.getEndTime();
-        } else {
+        if(this.productionLine == null) {
             return null;
+        } else {
+            if(this.previousJob == null) {
+                startTime = this.productionLine.getStartTime();
+            } else {
+                if(this.previousJob.getEndTime() == null) {
+                    return null;
+                } else {
+                    startTime = this.previousJob.getEndTime();
+                }
+            }
         }
 
         if(this.predecessorJobs != null) {
             for(Job predecessorJob : this.predecessorJobs) {
                 if(predecessorJob.getEndTime() == null) {
-                    return null;
+                    continue;
                 }
-
                 if(startTime.isBefore(predecessorJob.getEndTime())) {
                     startTime = predecessorJob.getEndTime();
                 }
@@ -95,30 +103,6 @@ public class Job {
         }
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public Collection<ProductionLine> getAvailableProductionLines() {
-        return availableProductionLines;
-    }
-
-    public void setAvailableProductionLines(Collection<ProductionLine> availableProductionLines) {
-        this.availableProductionLines = availableProductionLines;
-    }
-
     public Long getId() {
         return id;
     }
@@ -135,8 +119,20 @@ public class Job {
         this.code = code;
     }
 
-    public boolean isLooped() {
-        return looped;
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public Collection<ProductionLine> getAvailableProductionLines() {
+        return availableProductionLines;
+    }
+
+    public void setAvailableProductionLines(Collection<ProductionLine> availableProductionLines) {
+        this.availableProductionLines = availableProductionLines;
     }
 
     public Collection<Job> getPredecessorJobs() {
@@ -146,7 +142,6 @@ public class Job {
     public void setPredecessorJobs(Collection<Job> predecessorJobs) {
         this.predecessorJobs = predecessorJobs;
     }
-
 
     public ProductionLine getProductionLine() {
         return productionLine;
@@ -170,6 +165,30 @@ public class Job {
 
     public void setNextJob(Job nextJob) {
         this.nextJob = nextJob;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public boolean isLooped() {
+        return looped;
+    }
+
+    public void setLooped(boolean looped) {
+        this.looped = looped;
     }
 
     @Override

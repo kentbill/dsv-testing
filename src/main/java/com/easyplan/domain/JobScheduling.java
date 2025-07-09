@@ -20,7 +20,6 @@ public class JobScheduling {
     @ValueRangeProvider(id = "jobRange")
     protected List<Job> jobList;
 
-    //@ValueRangeProvider(id = "lineRange")
     @PlanningEntityCollectionProperty
     protected List<ProductionLine> productionLineList;
 

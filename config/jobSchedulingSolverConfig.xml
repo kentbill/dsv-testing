@@ -23,14 +23,9 @@
 
   <termination>
     <terminationCompositionStyle>OR</terminationCompositionStyle>
-    <secondsSpentLimit>10</secondsSpentLimit>
-    <unimprovedSecondsSpentLimit>10</unimprovedSecondsSpentLimit>
+    <secondsSpentLimit>5</secondsSpentLimit>
+    <unimprovedSecondsSpentLimit>5</unimprovedSecondsSpentLimit>
   </termination>
 
-  <constructionHeuristic>
 
-  </constructionHeuristic>
-  <localSearch>
-
-  </localSearch>
 </solver>

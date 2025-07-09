@@ -23,9 +23,10 @@ public class ProductionLine {
     public ProductionLine() {
     }
 
-    public ProductionLine(long id, String code) {
+    public ProductionLine(long id, String code, LocalDateTime startTime) {
         this.id = id;
         this.code = code;
+        this.startTime = startTime;
         jobList = new ArrayList<>();
     }
 

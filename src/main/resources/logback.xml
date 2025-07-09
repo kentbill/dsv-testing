@@ -31,7 +31,7 @@
   <!-- To override the debug log level from the command line, use the VM option
       "-Dlogback.level.org.timefold=trace" -->
   <logger name="ai.timefold"
-          level="${logback.level.ai.timefold:-trace}" />
+          level="${logback.level.ai.timefold:-debug}" />
 
   <root level="trace">
     <appender-ref ref="consoleAppender" />
