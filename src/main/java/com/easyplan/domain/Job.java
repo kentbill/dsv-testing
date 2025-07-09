@@ -7,8 +7,6 @@ import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.variable.*;
 import ai.timefold.solver.core.preview.api.domain.variable.declarative.ShadowSources;
 import ai.timefold.solver.core.preview.api.domain.variable.declarative.ShadowVariableLooped;
-import jdk.jfr.DataAmount;
-import lombok.Data;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -46,6 +44,8 @@ public class Job {
     @ShadowVariableLooped
     public boolean looped;
 
+    private LocalDateTime readyTime;
+
 
     public Job() {
     }
@@ -53,16 +53,19 @@ public class Job {
 
     public Job(long id, String code,
                Duration duration, Collection<ProductionLine> availableProductionLines,
-               Collection<Job> predecessorJobs) {
+               Collection<Job> predecessorJobs, LocalDateTime readyTime) {
         this.id = id;
         this.code = code;
         this.duration = duration;
         this.availableProductionLines = availableProductionLines;
         this.predecessorJobs = predecessorJobs;
+        this.readyTime = readyTime;
     }
 
 
-    @ShadowSources({"previousJob.endTime", "predecessorJobs[].endTime"})
+    @ShadowSources({"previousJob.endTime",
+            "predecessorJobs[].endTime"
+    })
     public LocalDateTime startTimeSupplier() {
         LocalDateTime startTime = null;
 
@@ -89,6 +92,11 @@ public class Job {
                     startTime = predecessorJob.getEndTime();
                 }
             }
+        }
+
+        // 如果readyTime非空，确保startTime不早于readyTime
+        if(this.readyTime != null && startTime.isBefore(this.readyTime)) {
+            startTime = this.readyTime;
         }
 
         return startTime;
@@ -189,6 +197,14 @@ public class Job {
 
     public void setLooped(boolean looped) {
         this.looped = looped;
+    }
+
+    public LocalDateTime getReadyTime() {
+        return readyTime;
+    }
+
+    public void setReadyTime(LocalDateTime readyTime) {
+        this.readyTime = readyTime;
     }
 
     @Override

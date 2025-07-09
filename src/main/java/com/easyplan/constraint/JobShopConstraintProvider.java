@@ -21,7 +21,7 @@ public class JobShopConstraintProvider implements ConstraintProvider {
                 productionLineMatch(factory),
                 penalizeLoopedJobs(factory),
                 balanceProductionLine(factory),
-                minimizeMakespan(factory)
+//                minimizeMakespan(factory)
         };
     }
 

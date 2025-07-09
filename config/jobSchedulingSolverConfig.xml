@@ -23,7 +23,7 @@
 
   <termination>
     <terminationCompositionStyle>OR</terminationCompositionStyle>
-    <secondsSpentLimit>5</secondsSpentLimit>
+    <secondsSpentLimit>10</secondsSpentLimit>
     <unimprovedSecondsSpentLimit>5</unimprovedSecondsSpentLimit>
   </termination>
 
