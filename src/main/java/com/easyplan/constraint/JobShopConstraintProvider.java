@@ -21,7 +21,7 @@ public class JobShopConstraintProvider implements ConstraintProvider {
                 productionLineMatch(factory),
                 penalizeLoopedJobs(factory),
                 balanceProductionLine(factory),
-//                minimizeMakespan(factory)
+                minimizeMakespan(factory)
         };
     }
 
@@ -46,7 +46,7 @@ public class JobShopConstraintProvider implements ConstraintProvider {
                     .complement(ProductionLine.class, e -> 0L)
                     .groupBy(ConstraintCollectors.loadBalance((productionLine, jobCount) -> productionLine,
                             (productionLine, jobCount) -> jobCount))
-                    .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, LoadBalance::unfairness)
+                    .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_MEDIUM, LoadBalance::unfairness)
                     .asConstraint("fairAssignmentCountPerTeam");
     }
 
@@ -60,12 +60,12 @@ public class JobShopConstraintProvider implements ConstraintProvider {
                 .asConstraint("Minimize make span");
     }
 
-//     Constraint minimizeMakespan1(ConstraintFactory factory) {
-//        return factory.forEach(ProductionLine.class)
-//                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT,
-//                        productionLine -> BigDecimal.valueOf(Duration.between(productionLine.getStartTime(), productionLine.getEndTime()).toMinutes() *
-//                                Duration.between(productionLine.getStartTime(), productionLine.getEndTime()).toMinutes()))
-//                .asConstraint("Minimize make span");
-//    }
+     Constraint minimizeMakespan1(ConstraintFactory factory) {
+        return factory.forEach(ProductionLine.class)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT,
+                        productionLine -> BigDecimal.valueOf(Duration.between(productionLine.getStartTime(), productionLine.getEndTime()).toMinutes() *
+                                Duration.between(productionLine.getStartTime(), productionLine.getEndTime()).toMinutes()))
+                .asConstraint("Minimize make span");
+    }
 
 }

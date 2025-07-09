@@ -64,7 +64,8 @@ public class Job {
 
 
     @ShadowSources({"previousJob.endTime",
-            "predecessorJobs[].endTime"
+            "predecessorJobs[].endTime",
+            "productionLine"
     })
     public LocalDateTime startTimeSupplier() {
         LocalDateTime startTime = null;
