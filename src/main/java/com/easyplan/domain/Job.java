@@ -18,6 +18,10 @@ public class Job {
     @PlanningId
     private Long id;
 
+    private String parentCode;
+
+    private Integer seq;
+
     private String code;
 
     private Duration duration;
@@ -51,11 +55,13 @@ public class Job {
     }
 
 
-    public Job(long id, String code,
+    public Job(long id, String code, String parentCode, Integer seq,
                Duration duration, Collection<ProductionLine> availableProductionLines,
                Collection<Job> predecessorJobs, LocalDateTime readyTime) {
         this.id = id;
         this.code = code;
+        this.parentCode = parentCode;
+        this.seq = seq;
         this.duration = duration;
         this.availableProductionLines = availableProductionLines;
         this.predecessorJobs = predecessorJobs;
@@ -126,6 +132,22 @@ public class Job {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
+
+    public Integer getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
     }
 
     public Duration getDuration() {

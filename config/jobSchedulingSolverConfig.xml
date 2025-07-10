@@ -27,5 +27,12 @@
     <unimprovedSecondsSpentLimit>5</unimprovedSecondsSpentLimit>
   </termination>
 
+  <constructionHeuristic>
+
+  </constructionHeuristic>
+
+  <localSearch>
+
+  </localSearch>
 
 </solver>

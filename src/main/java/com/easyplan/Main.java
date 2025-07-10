@@ -22,37 +22,38 @@ public class Main {
         List<ProductionLine> productionLineList = new ArrayList<>(
                 Arrays.asList(
                         new ProductionLine(1L, "Line1", LocalDateTime.of(2025, 7, 1, 0, 0)),
-                        new ProductionLine(2L, "Line2", LocalDateTime.of(2025, 7, 2, 0, 0))
+                        new ProductionLine(2L, "Line2", LocalDateTime.of(2025, 7, 2, 0, 0)),
+                        new ProductionLine(3L, "Line3", LocalDateTime.of(2025, 7, 1, 0, 0))
                         
                 ));
 
 
         List<Job> jobList = new ArrayList<>();
 
-        Job job01 =  new Job(1, "JobO1",Duration.of(5, ChronoUnit.HOURS), productionLineList,new ArrayList<>(),
+        Job job01 =  new Job(1, "JobO1", "g1", 1, Duration.of(5, ChronoUnit.HOURS), productionLineList,new ArrayList<>(),
                 LocalDateTime.of(2025, 7, 3, 12, 0));
         jobList.add(job01);
 
-        Job job02 =  new Job(2, "JobO2",Duration.of(8, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
+        Job job02 =  new Job(2, "JobO2", "g1", 2, Duration.of(8, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
                 LocalDateTime.of(2025, 7, 2, 10, 0));
         jobList.add(job02);
 
-        Job job03 =  new Job(3, "JobO3",Duration.of(9, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
+        Job job03 =  new Job(3, "JobO3", null, null, Duration.of(9, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
                 LocalDateTime.of(2025, 7, 3, 0, 0));
         jobList.add(job03);
 
         job03.getPredecessorJobs().add(job01);
         job03.getPredecessorJobs().add(job02);
 
-        Job job04 =  new Job(4, "JobO4",Duration.of(5, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
+        Job job04 =  new Job(4, "JobO4","g2", 1, Duration.of(5, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
                 LocalDateTime.of(2025, 7, 2, 20, 0));
         jobList.add(job04);
 
-        Job job05 =  new Job(5, "JobO5",Duration.of(15, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
+        Job job05 =  new Job(5, "JobO5","g2", 2, Duration.of(15, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
                 LocalDateTime.of(2025, 7, 2, 18, 0));
         jobList.add(job05);
 
-        Job job06 =  new Job(6, "JobO6",Duration.of(12, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
+        Job job06 =  new Job(6, "JobO6", null, null ,Duration.of(12, ChronoUnit.HOURS), productionLineList, new ArrayList<>(),
                 LocalDateTime.of(2025, 7, 3, 12, 0));
         jobList.add(job06);
 
@@ -62,7 +63,6 @@ public class Main {
         job03.getPredecessorJobs().add(job06);
 
         /*
- 
         Job job07 =  new Job(7, "JobO7",Duration.of(25, ChronoUnit.HOURS), productionLineList, new ArrayList<>());
         jobList.add(job07);
 
@@ -177,7 +177,6 @@ public class Main {
         job32.getPredecessorJobs().add(job31);
 
         */
-       
 
         JobScheduling jobSchedulingProblem = new JobScheduling(1L,  jobList, productionLineList);
 
