@@ -22,6 +22,13 @@ public class Job {
 
     private Integer seq;
 
+    /**
+     * the changeover duration from other jobs
+     * key - the other job id
+     * value - the changeover duration from another job.
+     */
+    private Map<Long, Duration> changeoverDurationMap;
+
     private String code;
 
     private Duration duration;
@@ -57,7 +64,9 @@ public class Job {
 
     public Job(long id, String code, String parentCode, Integer seq,
                Duration duration, Collection<ProductionLine> availableProductionLines,
-               Collection<Job> predecessorJobs, LocalDateTime readyTime) {
+               Collection<Job> predecessorJobs, LocalDateTime readyTime,
+               Map<Long, Duration> changeoverDurationMap
+               ) {
         this.id = id;
         this.code = code;
         this.parentCode = parentCode;
@@ -66,6 +75,7 @@ public class Job {
         this.availableProductionLines = availableProductionLines;
         this.predecessorJobs = predecessorJobs;
         this.readyTime = readyTime;
+        this.changeoverDurationMap = changeoverDurationMap;
     }
 
 
@@ -76,6 +86,7 @@ public class Job {
     public LocalDateTime startTimeSupplier() {
         LocalDateTime startTime = null;
 
+        // get startTime by previous endTime
         if(this.productionLine == null) {
             return null;
         } else {
@@ -86,6 +97,8 @@ public class Job {
                     return null;
                 } else {
                     startTime = this.previousJob.getEndTime();
+                    // changeover
+                    startTime = startTime.plus(this.getChangeoverDurationMap().get(this.previousJob.getId()));
                 }
             }
         }
@@ -228,6 +241,14 @@ public class Job {
 
     public void setReadyTime(LocalDateTime readyTime) {
         this.readyTime = readyTime;
+    }
+
+    public Map<Long, Duration> getChangeoverDurationMap() {
+        return changeoverDurationMap;
+    }
+
+    public void setChangeoverDurationMap(Map<Long, Duration> changeoverDurationMap) {
+        this.changeoverDurationMap = changeoverDurationMap;
     }
 
     @Override
